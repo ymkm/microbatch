@@ -13,20 +13,19 @@ import java.util.concurrent.atomic.AtomicBoolean
 data class JobResult(val success: Boolean, val message: String)
 
 /**
- * a job that can be executed. Clients of the Microbatch extend this interface
+ * a job that can be executed. Clients of the library extend this interface
  */
 interface Job {
     /**
      * Executes the job.
      *
-     * @return The result of the job execution.
+     * @return The result of the job execution as a JobResult
      */
     suspend fun execute(): JobResult
 }
 
 /**
  * a processor that executes a list of jobs, in sequence or in parallel as required
- * @return
  */
 interface BatchProcessor {
     /**
