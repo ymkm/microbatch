@@ -54,7 +54,6 @@ class MicroBatchingProcessor(
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private val jobQueue = LinkedBlockingQueue<Pair<Job, CompletableDeferred<JobResult>>>()
     private var isRunning = AtomicBoolean(true)
-    private var count = AtomicInteger()
 
     init {
         require(batchSize > MIN_BATCH_SIZE) { "batchSize must be at least $MIN_BATCH_SIZE" }
@@ -92,7 +91,6 @@ class MicroBatchingProcessor(
         jobQueue.drainTo(jobs, batchSize)
         if (jobs.isNotEmpty()) {
             val results = batchProcessor.processBatch(jobs.map { it.first })
-            count.incrementAndGet()
             results.forEachIndexed { index, result ->
                 jobs[index].second.complete(result)
             }
