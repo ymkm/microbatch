@@ -107,20 +107,22 @@ class MicroBatchingProcessorTest {
                 val firstBatch = (1..3).map { processor.submitJob(AdditionJob(1, it)) }
                 val secondBatch = (5..6).map { processor.submitJob(AdditionJob(1, it)) }
 
+                val threshold = testFrequency * 2 // first batch should complete before this, and second batch after
+
                 launch {
                     secondBatch.awaitAll()
-                    assertThat(System.currentTimeMillis() - startTime).isGreaterThan(testFrequency * 2)
+                    assertThat(System.currentTimeMillis() - startTime).isGreaterThan(threshold)
                 }
 
                 launch {
                     firstBatch.awaitAll()
-                    assertThat(System.currentTimeMillis() - startTime).isLessThan(testFrequency * 3)
+                    assertThat(System.currentTimeMillis() - startTime).isLessThan(threshold)
                 }
             }
         }
 
         @Test
-        fun `runs jobs in parallel when provided with a Parallel batch processor`() {
+        fun `runs jobs in parallel when provided with a parallel batch processor`() {
             runBlocking {
                 val processor = MicroBatchingProcessor(ParallelBatchProcessor())
                 val totalJobs = 20
