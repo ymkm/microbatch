@@ -3,7 +3,6 @@ package com.ymkm.microbatch
 import kotlinx.coroutines.*
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Data class representing the result of a job execution.

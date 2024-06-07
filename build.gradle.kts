@@ -10,7 +10,6 @@ application {
 group = "com.ymkm"
 version = "1.0-SNAPSHOT"
 
-
 repositories {
     mavenCentral()
 }
@@ -33,7 +32,13 @@ kotlin {
 // https://www.baeldung.com/kotlin/gradle-executable-jar
 tasks {
     val fatJar = register<Jar>("fatJar") {
-        dependsOn.addAll(listOf("compileJava", "compileKotlin", "processResources")) // We need this for Gradle optimization to work
+        dependsOn.addAll(
+            listOf(
+                "compileJava",
+                "compileKotlin",
+                "processResources"
+            )
+        ) // We need this for Gradle optimization to work
         archiveClassifier.set("standalone") // Naming the jar
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest { attributes(mapOf("Main-Class" to application.mainClass)) } // Provided we set it up in the application plugin configuration
@@ -47,3 +52,4 @@ tasks {
         dependsOn(fatJar) // Trigger fat jar creation during build
     }
 }
+

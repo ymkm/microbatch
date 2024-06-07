@@ -8,13 +8,13 @@ improving throughput and reducing the overhead of processing individual jobs.
 
 To use the micro-batching library:
 
-1. Implement the `Job` interface for your specific job type.
-1. Provide an implementation of `BatchProcessor` to processes batches of jobs
+1. Implement the `Job` interface for your specific job type
+1. Provide an implementation of `BatchProcessor`
 1. Create a `MicroBatchingProcessor` instance, passing in your `BatchProcessor` and configuring
-   the batch size and frequency
+    batch size and frequency
 1. Submit jobs to the `MicroBatchingProcessor` using `submitJob()`. This returns a `Deferred<JobResult>` promise that can be
    awaited to obtain the job result
-1. When all jobs have been submitted - call `shutdown()` to ensure all remaining jobs are processed before the
+1. When all jobs have been submitted, call `shutdown()` to ensure all remaining jobs are processed before the
    processor shuts down
 
 ```kotlin
@@ -51,11 +51,12 @@ fun main() = runBlocking {
 
 ```
 ## Example code
-A prebuilt file containing all dependencies can be [downloaded here]() and run on any device with a [Java runtime](https://www.java.com/download/manual.jsp) using the following command:
+A prebuilt file containing all dependencies can be [downloaded here](https://www.dropbox.com/s/m5ifzvgeb31vhlj/microbatch-1.0-SNAPSHOT-standalone.jar?e=1&dl=1) and run on any device with a [Java runtime](https://www.java.com/download/manual.jsp) using the following command:
 ```
-java -jar microbatch.jar
+> java -jar microbatch-1.0-SNAPSHOT-standalone.jar 
+> Some random numbers between 0 and 100 are: 0, 19, 85, 89, 52
 ```
-This example usses the MicroBatchingProcessor to make requests to a third party random-number-generating REST webservice and displays the results.
+This example uses the library to make requests to a third party random-number-generating REST webservice and displays the results.
 
 ## Design
 
