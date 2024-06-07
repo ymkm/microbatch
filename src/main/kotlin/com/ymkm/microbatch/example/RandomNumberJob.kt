@@ -9,7 +9,7 @@ import okhttp3.Request
  * Job that runs makes an HTTP request to a third party random-number-generating website
  * and returns the result as a String
  */
-class RandomNumberJob() : Job {
+class RandomNumberJob : Job {
     private val client = OkHttpClient()
     override suspend fun execute(): JobResult {
         val request = Request.Builder()

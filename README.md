@@ -8,14 +8,14 @@ improving throughput and reducing the overhead of processing individual jobs.
 
 To use the micro-batching library:
 
-1. Implement the `Job` interface for your specific job type
+1. Implement the `Job` interface for your specific job type.
 1. Provide an implementation of `BatchProcessor`
 1. Create a `MicroBatchingProcessor` instance, passing in your `BatchProcessor` and configuring
-    batch size and frequency
+    batch size and frequency.
 1. Submit jobs to the `MicroBatchingProcessor` using `submitJob()`. This returns a `Deferred<JobResult>` promise that can be
-   awaited to obtain the job result
+   awaited to obtain the job result.
 1. When all jobs have been submitted, call `shutdown()` to ensure all remaining jobs are processed before the
-   processor shuts down
+   processor shuts down.
 
 ```kotlin
 // Implement your Job
@@ -68,7 +68,7 @@ efficient compared to using threads directly and run on top of a dedicated threa
 
 Co-routine techniques include:
 
-*  `launch` and `async` blocks to run code in separate child co-routines
+*  `launch` and `async` blocks to run code in separate child coroutines
 *  `CompletableDeferred` promises are returned from job submissions to allow clients to `await()` asynchronous results
 * `cancelAndJoin()` function supports the safe stopping of the `BatchProcessor`
 
@@ -87,6 +87,9 @@ the rest of the batch.
 
 
 ## Tests
+A suite of unit tests is included to ensure correctness and reliability of the batching processes and validation of inputs.
+An example integration test which makes  network requests is also supplied.
+
 To run the tests:
 ```
 ./gradlew test
@@ -95,7 +98,7 @@ To run the tests:
 ## Future considerations
 
 - Reduce time to run unit tests by using [Virtual Time](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/) offered by the Kotlin Coroutine testing library.
-- Introduce observable state (running, paused, queue size, jobs in progress).
+- Introduce observable state (e.g. running, idle, queue size, jobs in progress).
 - Specify maximum queue size and reject jobs once this limit is reached.
 - Support custom `JobResult` implementations.
 - Add logging, metrics and telemetry to observe performance and resolve issues in production quickly.

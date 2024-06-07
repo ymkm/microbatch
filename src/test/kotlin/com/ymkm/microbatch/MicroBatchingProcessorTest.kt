@@ -156,7 +156,6 @@ class MicroBatchingProcessorTest {
                 assertThat(successfulJobCount).isEqualTo(5)
             }
         }
-
     }
 
     @Nested
