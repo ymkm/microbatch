@@ -4,6 +4,9 @@ import com.ymkm.microbatch.BatchProcessor
 import com.ymkm.microbatch.Job
 import com.ymkm.microbatch.JobResult
 
+/**
+ * BatchProcessor that runs jobs sequentially and transforms Exceptions into JobResults
+ */
 class SimpleBatchProcessor : BatchProcessor {
     override suspend fun processBatch(jobs: List<Job>): List<JobResult> {
         return jobs.map {
