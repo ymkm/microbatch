@@ -63,14 +63,14 @@ This example uses the library to make requests to a third party random-number-ge
 ### Coroutines for asynchronous processing
 
 The library uses [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) for asynchronous processing, allowing jobs to be submitted and processed
-concurrently. This design decision was made to improve performance and scalability. Coroutines are lightweight and 
-efficient compared to using threads directly and run on top of a dedicated thread-pool.
+concurrently. This design decision was made to ensure performance and scalability. Coroutines are lightweight and 
+efficient compared to using threads directly, and run on top of a dedicated thread-pool.
 
-Co-routine techniques include:
+Coroutine techniques used by the library include:
 
-*  `launch` and `async` blocks to run code in separate child coroutines
-*  `CompletableDeferred` promises are returned from job submissions to allow clients to `await()` asynchronous results
-* `cancelAndJoin()` function supports the safe stopping of the `BatchProcessor`
+* Use of `launch` and `async` blocks to run code in separate child coroutines.
+* Returning `CompletableDeferred` promises from job submissions to allow clients to `await()` asynchronous results.
+* Safely stopping the `BatchProcessor` with the  `cancelAndJoin()` function.
 
 ### Thread-safe shared-state access
 The library uses thread-safe data structures and synchronization mechanisms to ensure safe access to shared state, 
@@ -79,8 +79,8 @@ specifically the job queue using a `LinkedBlockingQueue` and the `isRunning` fla
 ### Error handling 
 The library offers a flexible choice of error handling. Either or both of the following approaches can be taken:
 
-* Each `Job` handles exceptions internally, returning a `JobResult` with `success=false` when an error occurs
-* The `BatchProcessor` implementation catches Exceptions thrown when calling `execute()` on a `Job` and transforms the Exception into a failed `JobResult`
+* Each `Job` handles exceptions internally, returning a `JobResult` with `success=false` when an error occurs.
+* The `BatchProcessor` implementation catches Exceptions thrown when calling `execute()` on a `Job` and transforms the Exception into a failed `JobResult`.
 
 In the second case the processor may choose to stop processing in the event of one or many exceptional conditions, or continue with
 the rest of the batch.
@@ -101,7 +101,7 @@ To run the tests:
 - Introduce observable state (e.g. running, idle, queue size, jobs in progress).
 - Specify maximum queue size and reject jobs once this limit is reached.
 - Support custom `JobResult` implementations.
-- Add logging, metrics and telemetry to observe performance and resolve issues in production quickly.
-- Package for deployment to central library such as Maven.
+- Add integration points for logging, metrics and telemetry to observe performance and resolve issues in production quickly.
+- Package for deployment to a central library such as Maven.
 - Support alternative batching strategies - e.g. run immediately when batch size reached.
 - Support alternative `JobResult` handling such as a reactive stream that can be subscribed to.
